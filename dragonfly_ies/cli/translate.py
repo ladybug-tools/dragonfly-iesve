@@ -25,7 +25,12 @@ def translate():
     type=click.Path(exists=False, file_okay=False, resolve_path=True,
                     dir_okay=True), default='.', show_default=True
 )
-def model_to_gem(model_json, name, folder):
+@click.option('--enforce-adj-check/--bypass-adj-check', ' /-bc', help='Flag to note '
+              'whether an exception should be raised if an adjacency between two '
+              'Room2Ds is invalid or if the check should be bypassed and the invalid '
+              'Surface boundary condition should be replaced with an Outdoor boundary '
+              'condition.', default=True, show_default=True)
+def model_to_gem(model_json, name, folder, enforce_adj_check):
     """Translate a Dragonfly Model JSON file to an IES GEM file.
 
     \b
@@ -37,7 +42,7 @@ def model_to_gem(model_json, name, folder):
         model = Model.from_file(model_json)
         folder = pathlib.Path(folder)
         folder.mkdir(parents=True, exist_ok=True)
-        model.to_gem(folder.as_posix(), name=name)
+        model.to_gem(folder.as_posix(), name=name, enforce_adj=enforce_adj_check)
     except Exception as e:
         _logger.exception('Model translation failed.\n{}'.format(e))
         sys.exit(1)
