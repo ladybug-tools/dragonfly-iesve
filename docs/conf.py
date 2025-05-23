@@ -16,12 +16,16 @@ import os
 import sys
 import re
 import datetime
+
+# The theme to use for HTML and HTML Help pages
+import sphinx_bootstrap_theme
+
 now = datetime.datetime.now()
 sys.path.insert(0, os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'dragonfly-ies'
+project = 'dragonfly-iesve'
 copyright = '{}, Ladybug Tools'.format(str(now.year))
 author = 'Ladybug Tools'
 
@@ -71,7 +75,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -81,13 +85,10 @@ exclude_patterns = []
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
+# hide the class names in the nav bar
+toc_object_entries_show_parents = 'hide'
 
 # -- Options for HTML output -------------------------------------------------
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
-import sphinx_bootstrap_theme
 
 # html_theme = 'alabaster'
 html_theme = 'bootstrap'
@@ -125,6 +126,7 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['custom.css']
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -169,7 +171,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'dragonfly-ies.tex', 'dragonfly-ies Documentation',
+    (master_doc, 'dragonfly-iesve.tex', 'dragonfly-iesve Documentation',
      'Ladybug Tools', 'manual'),
 ]
 
@@ -179,7 +181,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'dragonfly-ies', 'dragonfly-ies Documentation',
+    (master_doc, 'dragonfly-iesve', 'dragonfly-iesve Documentation',
      [author], 1)
 ]
 
@@ -190,8 +192,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'dragonfly-ies', 'dragonfly-ies Documentation',
-     author, 'dragonfly-ies', 'One line description of project.',
+    (master_doc, 'dragonfly-iesve', 'dragonfly-iesve Documentation',
+     author, 'dragonfly-iesve', 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -451,11 +453,11 @@ def write_cli_files(ht_cli_data, lib_name, tool_name, doc_folder):
         ht_cli_data: A dictionary containing the names of the reSt CLI files
             that will be generated and their corresponding CLI group name.
         lib_name: The name of the library the click groups belong to. For
-            example ``honeybee_energy``, ``dragonfly`` or ``honeybee_radiance``
+            example ``dragonfly_energy``, ``dragonfly`` or ``dragonfly_radiance``
             are possible library names.
         tool_name: The command line tool name for the specified library. For
-            instance ``honeybee-energy`` is the CLI tool used for the
-            honeybee_energy library.
+            instance ``dragonfly-energy`` is the CLI tool used for the
+            dragonfly_energy library.
         doc_folder: The path where the CLI documentation files will be saved.
     """
 
@@ -555,7 +557,7 @@ def update_doc_index(proj_folder, lib_name):
         proj_folder: The documentation file path where the package documentation
             index.rst file is located.
         lib_name: The name of the library the click groups belong to. For
-            example ``honeybee_energy``, ``dragonfly`` or ``honeybee_radiance``
+            example ``dragonfly_energy``, ``dragonfly`` or ``dragonfly_radiance``
             are possible library names.
     Returns:
         1 on success.
@@ -596,7 +598,8 @@ def update_doc_index(proj_folder, lib_name):
         with open(os.path.join(proj_folder, "index.rst"), 'w') as index_file:
             text = index_file.write(text_updated)
     else:
-        print("[CLI doc\\index]: index.rst update not possible - content format cannot be recognized.")
+        print("[CLI doc\\index]: index.rst update not possible - content \
+              format cannot be recognized.")
         return -1
 
     return 1
@@ -607,13 +610,3 @@ if custom_cli_docs:
     create_cli_files()
 
 # -----------------------------------------------------------------------------
-
-
-def setup(app):
-    """Run custom code with access to the Sphinx application object
-    Args:
-        app: the Sphinx application object
-    """
-
-    # Add bootstrap theme custom stylesheet
-    app.add_css_file("custom.css")

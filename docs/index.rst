@@ -1,16 +1,16 @@
-Welcome to dragonfly-ies's documentation!
+Welcome to dragonfly-iesve's documentation!
 ===================================
 
-Dragonfly extension for export to IES-VE GEM file format
+Dragonfly extension for export to eQuest/DOE-2
 
 
 Installation
 ============
 
-``pip install dragonfly-ies``
+``pip install dragonfly-iesve``
 
 
-dragonfly-ies
+dragonfly-iesve
 =======
 
 .. toctree::

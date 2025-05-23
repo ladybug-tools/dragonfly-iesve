@@ -7,7 +7,7 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(
-    name="dragonfly-ies",
+    name="dragonfly-iesve",
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
     author="Ladybug Tools",
@@ -15,14 +15,16 @@ setuptools.setup(
     description="Dragonfly extension for export to IES-VE GEM file format",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/ladybug-tools/dragonfly-ies",
+    url="https://github.com/ladybug-tools/dragonfly-iesve",
     packages=setuptools.find_packages(exclude=["tests*"]),
     install_requires=requirements,
     entry_points={
-        "console_scripts": ["dragonfly-ies = dragonfly_ies.cli:ies"]
+        "console_scripts": ["dragonfly-iesve = dragonfly_iesve.cli:iesve"]
     },
     classifiers=[
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: Implementation :: CPython",
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent"

@@ -1,4 +1,4 @@
-from dragonfly_ies.cli import ies
+from dragonfly_iesve.cli import ies
 
 
 if __name__ == '__main__':
