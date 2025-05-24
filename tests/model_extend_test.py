@@ -8,8 +8,8 @@ from dragonfly.roof import RoofSpecification
 from dragonfly.windowparameter import SimpleWindowRatio
 
 
-def test_model_properties_to_honeybee():
-    """Test translation of DOE-2 properties to Honeybee."""
+def test_validation():
+    """Test the validation of the model for IES-VE."""
     # Crate an input Model
     pts1 = (Point3D(0, 0, 0), Point3D(10, 0, 0),
             Point3D(10, 10, 0), Point3D(0, 10, 0))
