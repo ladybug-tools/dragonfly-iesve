@@ -39,3 +39,12 @@ def test_model_to_inp():
     # create the INP string for the model
     gem_str = model_to_gem(model)
     assert len(gem_str) > 1000
+
+
+def test_vertical_air_boundary():
+    """Test the translation of a Model to GEM with a vertical air boundary."""
+    input_df_model = './tests/assets/vertical_connection.dfjson'
+    model = Model.from_file(input_df_model)
+    gem_str = model_to_gem(model)
+
+    assert '42 2\n' in gem_str
