@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dragonfly_iesve.writer &#8212; dragonfly-iesve  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-sphinx.css?v=0bf093e7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0b9525ea" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="icon" type="image/x-icon" href="https://github.com/ladybug-tools/artwork/raw/refs/heads/master/icons_bugs/ico/dragonfly.ico">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          dragonfly-iesve</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/index.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/index.html#commands">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../cli/translate.html">translate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../cli/translate.html#dragonfly-iesve-translate">dragonfly-iesve translate</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../cli/translate.html#dragonfly-iesve-translate-model-to-gem">model-to-gem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dragonfly_iesve.html">dragonfly_iesve package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../dragonfly_iesve.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../dragonfly_iesve.cli.html">dragonfly_iesve.cli package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../dragonfly_iesve.cli.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../dragonfly_iesve.cli.translate.html">dragonfly_iesve.cli.translate module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../dragonfly_iesve.cli.translate.html#dragonfly_iesve.cli.translate.model_to_gem"><code class="docutils literal notranslate"><span class="pre">model_to_gem()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../dragonfly_iesve.cli.html#module-dragonfly_iesve.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../dragonfly_iesve.properties.html">dragonfly_iesve.properties package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../dragonfly_iesve.properties.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../dragonfly_iesve.properties.model.html">dragonfly_iesve.properties.model module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../dragonfly_iesve.properties.model.html#dragonfly_iesve.properties.model.ModelIesveProperties"><code class="docutils literal notranslate"><span class="pre">ModelIesveProperties</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../dragonfly_iesve.properties.model.html#dragonfly_iesve.properties.model.ModelIesveProperties.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../dragonfly_iesve.properties.model.html#dragonfly_iesve.properties.model.ModelIesveProperties.apply_properties_from_dict"><code class="docutils literal notranslate"><span class="pre">apply_properties_from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../dragonfly_iesve.properties.model.html#dragonfly_iesve.properties.model.ModelIesveProperties.check_for_extension"><code class="docutils literal notranslate"><span class="pre">check_for_extension()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../dragonfly_iesve.properties.model.html#dragonfly_iesve.properties.model.ModelIesveProperties.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../dragonfly_iesve.properties.model.html#dragonfly_iesve.properties.model.ModelIesveProperties.host"><code class="docutils literal notranslate"><span class="pre">host</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../dragonfly_iesve.properties.html#module-dragonfly_iesve.properties">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../dragonfly_iesve.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../dragonfly_iesve.writer.html">dragonfly_iesve.writer module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../dragonfly_iesve.writer.html#dragonfly_iesve.writer.model_to_gem"><code class="docutils literal notranslate"><span class="pre">model_to_gem()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../dragonfly_iesve.html#module-dragonfly_iesve">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dragonfly_iesve.html">dragonfly_iesve package</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-4">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dragonfly_iesve.html">dragonfly_iesve package</a></li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-8 content" role="main">
+      
+  <h1>Source code for dragonfly_iesve.writer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;Write a gem file from a Dragonfly model.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ladybug_geometry.geometry3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Polyface3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">honeybee.facetype</span><span class="w"> </span><span class="kn">import</span> <span class="n">Floor</span><span class="p">,</span> <span class="n">RoofCeiling</span><span class="p">,</span> <span class="n">face_types</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">honeybee.room</span><span class="w"> </span><span class="kn">import</span> <span class="n">Room</span> <span class="k">as</span> <span class="n">HBRoom</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">honeybee_ies.writer</span><span class="w"> </span><span class="kn">import</span> <span class="n">model_to_gem</span> <span class="k">as</span> <span class="n">hb_model_to_gem</span>
+
+
+<div class="viewcode-block" id="model_to_gem">
+<a class="viewcode-back" href="../../dragonfly_iesve.writer.html#dragonfly_iesve.writer.model_to_gem">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">model_to_gem</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">use_multiplier</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclude_plenums</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate an IES GEM string from a Dragonfly Model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model: A dragonfly Model.</span>
+<span class="sd">        use_multiplier: Boolean to note whether the multipliers on each Building</span>
+<span class="sd">            story will be passed along to the Room objects or if full geometry</span>
+<span class="sd">            objects should be written for each repeated story in the</span>
+<span class="sd">            building. (Default: True).</span>
+<span class="sd">        exclude_plenums: Boolean to indicate whether ceiling/floor plenum depths</span>
+<span class="sd">            assigned to Room2Ds should generate distinct 3D Rooms in the</span>
+<span class="sd">            translation. (Default: False).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path to exported GEM file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># translate the model to honeybee</span>
+    <span class="n">hb_model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to_honeybee</span><span class="p">(</span>
+        <span class="s1">&#39;District&#39;</span><span class="p">,</span> <span class="n">use_multiplier</span><span class="o">=</span><span class="n">use_multiplier</span><span class="p">,</span> <span class="n">exclude_plenums</span><span class="o">=</span><span class="n">exclude_plenums</span><span class="p">,</span>
+        <span class="n">solve_ceiling_adjacencies</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">enforce_adj</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">enforce_solid</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># check if there are any ceiling/floor air boundaries to translate</span>
+    <span class="n">cf_air_rooms</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">room_2ds</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">room</span><span class="o">.</span><span class="n">has_floor</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">room</span><span class="o">.</span><span class="n">has_ceiling</span><span class="p">:</span>
+            <span class="n">cf_air_rooms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">room</span><span class="p">)</span>
+
+    <span class="c1"># if any floor/ceiling rooms were found, solve adjacency between them</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cf_air_rooms</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">tolerance</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tolerance</span>
+        <span class="n">room_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">identifier</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cf_air_rooms</span><span class="p">]</span>
+        <span class="n">has_floor_ceil</span> <span class="o">=</span> <span class="p">[(</span><span class="n">r</span><span class="o">.</span><span class="n">has_floor</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">has_ceiling</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cf_air_rooms</span><span class="p">]</span>
+        <span class="n">hb_rooms</span> <span class="o">=</span> <span class="n">hb_model</span><span class="o">.</span><span class="n">rooms_by_identifier</span><span class="p">(</span><span class="n">room_ids</span><span class="p">)</span>
+        <span class="c1"># intersect the Rooms with one another for matching adjacencies</span>
+        <span class="n">HBRoom</span><span class="o">.</span><span class="n">intersect_adjacency</span><span class="p">(</span><span class="n">hb_rooms</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">angle_tolerance</span><span class="p">)</span>
+        <span class="c1"># solve adjacencies between rooms to yield matching air boundaries</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">room_1</span><span class="p">,</span> <span class="n">fc_1</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">hb_rooms</span><span class="p">,</span> <span class="n">has_floor_ceil</span><span class="p">)):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">room_2</span><span class="p">,</span> <span class="n">fc_2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">hb_rooms</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">has_floor_ceil</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]):</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Polyface3D</span><span class="o">.</span><span class="n">overlapping_bounding_boxes</span><span class="p">(</span>
+                            <span class="n">room_1</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">room_2</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">):</span>
+                        <span class="k">continue</span>  <span class="c1"># no overlap in bounding box; adjacency impossible</span>
+                    <span class="k">for</span> <span class="n">face_1</span> <span class="ow">in</span> <span class="n">room_1</span><span class="o">.</span><span class="n">_faces</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">face_2</span> <span class="ow">in</span> <span class="n">room_2</span><span class="o">.</span><span class="n">_faces</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">face_1</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">is_centered_adjacent</span><span class="p">(</span>
+                                    <span class="n">face_2</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">):</span>
+                                <span class="n">face_1</span><span class="o">.</span><span class="n">remove_sub_faces</span><span class="p">()</span>
+                                <span class="n">face_2</span><span class="o">.</span><span class="n">remove_sub_faces</span><span class="p">()</span>
+                                <span class="n">hf_1</span><span class="p">,</span> <span class="n">hc_1</span> <span class="o">=</span> <span class="n">fc_1</span>
+                                <span class="n">hf_2</span><span class="p">,</span> <span class="n">hc_2</span> <span class="o">=</span> <span class="n">fc_2</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">hc_1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">hf_2</span><span class="p">:</span>
+                                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face_1</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">RoofCeiling</span><span class="p">)</span> <span class="ow">and</span> \
+                                            <span class="nb">isinstance</span><span class="p">(</span><span class="n">face_2</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">Floor</span><span class="p">):</span>
+                                        <span class="n">face_1</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">face_types</span><span class="o">.</span><span class="n">air_boundary</span>
+                                        <span class="n">face_2</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">face_types</span><span class="o">.</span><span class="n">air_boundary</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">hf_1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">hc_2</span><span class="p">:</span>
+                                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face_2</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">RoofCeiling</span><span class="p">)</span> <span class="ow">and</span> \
+                                            <span class="nb">isinstance</span><span class="p">(</span><span class="n">face_1</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">Floor</span><span class="p">):</span>
+                                        <span class="n">face_1</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">face_types</span><span class="o">.</span><span class="n">air_boundary</span>
+                                        <span class="n">face_2</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">face_types</span><span class="o">.</span><span class="n">air_boundary</span>
+                                <span class="k">break</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">pass</span>  <span class="c1"># we have reached the end of the list of zones</span>
+
+    <span class="c1"># return the honeybee model translated to GEM</span>
+    <span class="k">return</span> <span class="n">hb_model_to_gem</span><span class="p">(</span><span class="n">hb_model</span><span class="p">)</span></div>
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2025, Ladybug Tools.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 8.0.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

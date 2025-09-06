@@ -1,0 +1,6 @@
+translate
+=========
+
+.. click:: dragonfly_iesve.cli.translate:translate
+   :prog: dragonfly-iesve translate
+   :show-nested:

@@ -1,0 +1,18 @@
+dragonfly\_iesve.cli package
+============================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dragonfly_iesve.cli.translate
+
+Module contents
+---------------
+
+.. automodule:: dragonfly_iesve.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
