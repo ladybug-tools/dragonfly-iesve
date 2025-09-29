@@ -29,10 +29,17 @@ def translate():
     'ceiling/floor plenum depths assigned to Room2Ds should generate '
     'distinct 3D Rooms in the translation.', default=True, show_default=True)
 @click.option(
+    '--merge-method', '-m', help='Text to describe how the Room2Ds should '
+    'be merged into individual Rooms during the translation. Specifying a '
+    'value here can be an effective way to reduce the number of Room '
+    'volumes in the resulting Model and, ultimately, yield a faster simulation '
+    'time with less results to manage. Choose from: None, Zones, PlenumZones, '
+    'Stories, PlenumStories.', type=str, default='None', show_default=True)
+@click.option(
     '--output-file', '-o', help='Optional GEM file path to output the GEM string '
     'of the translation. By default this will be printed out to stdout.',
     type=click.File('w'), default='-', show_default=True)
-def model_to_gem_cli(model_file, multiplier, plenum, output_file):
+def model_to_gem_cli(model_file, multiplier, plenum, merge_method, output_file):
     """Translate a Dragonfly Model JSON file to an IES-VE GEM file.
 
     \b
@@ -42,7 +49,7 @@ def model_to_gem_cli(model_file, multiplier, plenum, output_file):
     try:
         full_geometry = not multiplier
         no_plenum = not plenum
-        model_to_gem(model_file, full_geometry, no_plenum, output_file)
+        model_to_gem(model_file, full_geometry, no_plenum, merge_method, output_file)
     except Exception as e:
         _logger.exception('Model translation failed.\n{}'.format(e))
         sys.exit(1)
@@ -51,8 +58,8 @@ def model_to_gem_cli(model_file, multiplier, plenum, output_file):
 
 
 def model_to_gem(
-    model_file, full_geometry=False, no_plenum=False, output_file=None,
-    multiplier=True, plenum=True
+    model_file, full_geometry=False, no_plenum=False, merge_method='None',
+    output_file=None, multiplier=True, plenum=True
 ):
     """Translate a Model file to an IES-VE GEM string.
 
@@ -65,6 +72,21 @@ def model_to_gem(
         no_plenum: Boolean to indicate whether ceiling/floor plenum depths
             assigned to Room2Ds should generate distinct 3D Rooms in the
             translation. (Default: False).
+        merge_method: An optional text string to describe how the Room2Ds should
+            be merged into individual Rooms during the translation. Specifying a
+            value here can be an effective way to reduce the number of Room
+            volumes in the resulting Model and, ultimately, yield a faster simulation
+            time with less results to manage. Note that Room2Ds will only be merged if
+            they form a contiguous volume. Otherwise, there will be multiple Rooms per
+            zone or story, each with an integer added at the end of their
+            identifiers. Choose from the following options:
+
+            * None - No merging will occur
+            * Zones - Room2Ds in the same zone will be merged
+            * PlenumZones - Only plenums in the same zone will be merged
+            * Stories - Rooms in the same story will be merged
+            * PlenumStories - Only plenums in the same story will be merged
+
         output_file: Optional GEM file to output the GEM string of the translation.
             If None, the string will be returned from this method. (Default: None).
     """
