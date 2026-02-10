@@ -1,5 +1,6 @@
 # coding=utf-8
 """Model IES-VE Properties."""
+from honeybee.units import parse_distance_string
 
 
 class ModelIesveProperties(object):
@@ -43,6 +44,7 @@ class ModelIesveProperties(object):
         msgs = []
         tol = self.host.tolerance
         ang_tol = self.host.angle_tolerance
+        i_tol = parse_distance_string('0.1mm', self.host.units)
 
         # perform checks for duplicate identifiers, which might mess with other checks
         msgs.append(self.host.check_all_duplicate_identifiers(False, detailed))
@@ -52,8 +54,8 @@ class ModelIesveProperties(object):
         msgs.append(self.host.check_self_intersecting_room_2ds(tol, False, detailed))
         msgs.append(self.host.check_plenum_depths(tol, False, detailed))
         msgs.append(self.host.check_window_parameters_valid(tol, False, detailed))
-        msgs.append(self.host.check_no_room2d_overlaps(tol, False, detailed))
-        msgs.append(self.host.check_collisions_between_stories(tol, False, detailed))
+        msgs.append(self.host.check_no_room2d_overlaps(i_tol, False, detailed))
+        msgs.append(self.host.check_collisions_between_stories(i_tol, False, detailed))
         msgs.append(self.host.check_roofs_above_rooms(tol, False, detailed))
         msgs.append(self.host.check_room2d_floor_heights_valid(False, detailed))
         msgs.append(self.host.check_all_room3d(tol, ang_tol, False, detailed))

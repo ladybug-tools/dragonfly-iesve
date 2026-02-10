@@ -1,7 +1,7 @@
 *.pyc
 test.py
 .pytest_cache
-*__pycache__
+/__pycache__
 .coverage
 *.ipynb
 .ipynb_checkpoints
@@ -10,6 +10,10 @@ test.py
 tox.ini
 /.cache
 /.vscode
+honeybee.log*
+.env
+htmlcov/*
+.DS_store
+/build
 .eggs
-*.code-workspace
 docs/_build/
