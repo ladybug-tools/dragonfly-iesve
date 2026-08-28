@@ -55,7 +55,6 @@ class ModelIesveProperties(object):
         msgs.append(self.host.check_plenum_depths(tol, False, detailed))
         msgs.append(self.host.check_window_parameters_valid(tol, False, detailed))
         msgs.append(self.host.check_no_room2d_overlaps(i_tol, False, detailed))
-        msgs.append(self.host.check_collisions_between_stories(i_tol, False, detailed))
         msgs.append(self.host.check_roofs_above_rooms(tol, False, detailed))
         msgs.append(self.host.check_room2d_floor_heights_valid(False, detailed))
         msgs.append(self.host.check_all_room3d(tol, ang_tol, False, detailed))
