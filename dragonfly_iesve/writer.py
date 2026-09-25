@@ -8,8 +8,12 @@ from honeybee.room import Room as HBRoom
 from honeybee_ies.writer import model_to_gem as hb_model_to_gem
 
 
-def model_to_gem(model, use_multiplier=True, exclude_plenums=False, merge_method='None'):
-    """Generate an IES GEM string from a Dragonfly Model.
+def model_to_hb_iesve(model, use_multiplier=True, exclude_plenums=False, merge_method='None'):
+    """Generate a Honeybee Model ready to be translated to IESVE from a Dragonfly Model.
+
+    This method is distinct from the generic ways of translating a dragonfly
+    model to honeybee in that adjacencies are only solved when they are necessary
+    for representing air boundaries and other custom boundary conditions in IESVE.
 
     Args:
         model: A dragonfly Model.
@@ -36,7 +40,7 @@ def model_to_gem(model, use_multiplier=True, exclude_plenums=False, merge_method
             * PlenumStories - Only plenums in the same story will be merged
 
     Returns:
-        Path to exported GEM file.
+        A Honeybee Model derived from the input Dragonfly Model.
     """
     # translate the model to honeybee
     hb_model = model.to_honeybee(
@@ -87,6 +91,45 @@ def model_to_gem(model, use_multiplier=True, exclude_plenums=False, merge_method
                                 break
             except IndexError:
                 pass  # we have reached the end of the list of zones
+
+    return hb_model
+
+
+def model_to_gem(model, use_multiplier=True, exclude_plenums=False, merge_method='None'):
+    """Generate an IES GEM string from a Dragonfly Model.
+
+    Args:
+        model: A dragonfly Model.
+        use_multiplier: Boolean to note whether the multipliers on each Building
+            story will be passed along to the Room objects or if full geometry
+            objects should be written for each repeated story in the
+            building. (Default: True).
+        exclude_plenums: Boolean to indicate whether ceiling/floor plenum depths
+            assigned to Room2Ds should generate distinct 3D Rooms in the
+            translation. (Default: False).
+        merge_method: An optional text string to describe how the Room2Ds should
+            be merged into individual Rooms during the translation. Specifying a
+            value here can be an effective way to reduce the number of Room volumes
+            in the resulting Model and, ultimately, yield a faster simulation time
+            with less results to manage. Note that Room2Ds will only be merged if they
+            form a contiguous volume across their solved adjacencies. Otherwise,
+            there will be multiple Rooms per zone or story, each with an integer
+            added at the end of their identifiers. Choose from the following options:
+
+            * None - No merging of Room2Ds will occur
+            * Zones - Room2Ds in the same zone will be merged
+            * PlenumZones - Only plenums in the same zone will be merged
+            * Stories - Rooms in the same story will be merged
+            * PlenumStories - Only plenums in the same story will be merged
+
+    Returns:
+        Text string for the file contents of a GEM file.
+    """
+    # translate the model to honeybee
+    hb_model = model_to_hb_iesve(
+        model, use_multiplier=use_multiplier, exclude_plenums=exclude_plenums,
+        merge_method=merge_method
+    )
 
     # return the honeybee model translated to GEM
     return hb_model_to_gem(hb_model)
