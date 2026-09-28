@@ -6,6 +6,7 @@ from ladybug_geometry.geometry3d import Polyface3D
 from honeybee.facetype import Floor, RoofCeiling, face_types
 from honeybee.room import Room as HBRoom
 from honeybee_ies.writer import model_to_gem as hb_model_to_gem
+from honeybee_ies.writer import _convert_room_ids
 
 
 def model_to_hb_iesve(model, use_multiplier=True, exclude_plenums=False, merge_method='None'):
@@ -40,7 +41,8 @@ def model_to_hb_iesve(model, use_multiplier=True, exclude_plenums=False, merge_m
             * PlenumStories - Only plenums in the same story will be merged
 
     Returns:
-        A Honeybee Model derived from the input Dragonfly Model.
+        A Honeybee Model derived from the input Dragonfly Model and a dictionary
+        of room identifiers mapped to the new IESVE compatible IDs.
     """
     # translate the model to honeybee
     hb_model = model.to_honeybee(
@@ -92,7 +94,10 @@ def model_to_hb_iesve(model, use_multiplier=True, exclude_plenums=False, merge_m
             except IndexError:
                 pass  # we have reached the end of the list of zones
 
-    return hb_model
+    # ensure model has identifiers that are acceptable for GEM
+    id_mapper = _convert_room_ids(hb_model)
+
+    return hb_model, id_mapper
 
 
 def model_to_gem(model, use_multiplier=True, exclude_plenums=False, merge_method='None'):
@@ -126,10 +131,10 @@ def model_to_gem(model, use_multiplier=True, exclude_plenums=False, merge_method
         Text string for the file contents of a GEM file.
     """
     # translate the model to honeybee
-    hb_model = model_to_hb_iesve(
+    hb_model, _ = model_to_hb_iesve(
         model, use_multiplier=use_multiplier, exclude_plenums=exclude_plenums,
         merge_method=merge_method
     )
 
     # return the honeybee model translated to GEM
-    return hb_model_to_gem(hb_model)
+    return hb_model_to_gem(hb_model, convert_room_ids=False)
