@@ -1,0 +1,7 @@
+main
+====
+
+.. click:: dragonfly_iesve.cli.__init__:iesve
+   :prog: dragonfly-iesve
+   :show-nested:
+   :commands: 
