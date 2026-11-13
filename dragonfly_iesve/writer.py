@@ -100,11 +100,17 @@ def model_to_hb_iesve(model, use_multiplier=True, exclude_plenums=False, merge_m
     return hb_model, id_mapper
 
 
-def model_to_gem(model, use_multiplier=True, exclude_plenums=False, merge_method='None'):
+def model_to_gem(
+    model, project_info=None,
+    use_multiplier=True, exclude_plenums=False, merge_method='None'
+):
     """Generate an IES GEM string from a Dragonfly Model.
 
     Args:
         model: A dragonfly Model.
+        project_info: An optional ladybug ProjectInfo object that describes criteria
+            about the project site. When specified, this will result in the location
+            and north_angle written into the GEM. (Default: None).
         use_multiplier: Boolean to note whether the multipliers on each Building
             story will be passed along to the Room objects or if full geometry
             objects should be written for each repeated story in the
@@ -137,4 +143,4 @@ def model_to_gem(model, use_multiplier=True, exclude_plenums=False, merge_method
     )
 
     # return the honeybee model translated to GEM
-    return hb_model_to_gem(hb_model, convert_room_ids=False)
+    return hb_model_to_gem(hb_model, project_info=project_info, convert_room_ids=False)
