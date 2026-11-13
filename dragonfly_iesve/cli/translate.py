@@ -4,6 +4,7 @@ import sys
 import logging
 
 from ladybug.commandutil import process_content_to_output
+from ladybug.projectinfo import ProjectInfo
 from dragonfly.model import Model
 
 from dragonfly_iesve.writer import model_to_gem as writer_model_to_gem
@@ -19,6 +20,11 @@ def translate():
 @translate.command('model-to-gem')
 @click.argument('model-file', type=click.Path(
     exists=True, file_okay=True, dir_okay=False, resolve_path=True))
+@click.option(
+    '--project-info', '-pi', help='Full path to a ladybug ProjectInfo JSON that '
+    'describes criteria about the project site. When specified, this will result in '
+    'the location and north_angle written into the GEM.', default=None, show_default=True,
+    type=click.Path(exists=True, file_okay=True, dir_okay=False, resolve_path=True))
 @click.option(
     '--multiplier/--full-geometry', ' /-fg', help='Flag to note if the '
     'multipliers on each Building story will be passed along to the '
@@ -39,7 +45,9 @@ def translate():
     '--output-file', '-o', help='Optional GEM file path to output the GEM string '
     'of the translation. By default this will be printed out to stdout.',
     type=click.File('w'), default='-', show_default=True)
-def model_to_gem_cli(model_file, multiplier, plenum, merge_method, output_file):
+def model_to_gem_cli(
+    model_file, project_info, multiplier, plenum, merge_method, output_file
+):
     """Translate a Dragonfly Model JSON file to an IES-VE GEM file.
 
     \b
@@ -49,7 +57,10 @@ def model_to_gem_cli(model_file, multiplier, plenum, merge_method, output_file):
     try:
         full_geometry = not multiplier
         no_plenum = not plenum
-        model_to_gem(model_file, full_geometry, no_plenum, merge_method, output_file)
+        model_to_gem(
+            model_file, project_info,
+            full_geometry, no_plenum, merge_method, output_file
+        )
     except Exception as e:
         _logger.exception('Model translation failed.\n{}'.format(e))
         sys.exit(1)
@@ -58,13 +69,17 @@ def model_to_gem_cli(model_file, multiplier, plenum, merge_method, output_file):
 
 
 def model_to_gem(
-    model_file, full_geometry=False, no_plenum=False, merge_method='None',
-    output_file=None, multiplier=True, plenum=True
+    model_file, project_info=None,
+    full_geometry=False, no_plenum=False, merge_method='None', output_file=None,
+    multiplier=True, plenum=True
 ):
     """Translate a Model file to an IES-VE GEM string.
 
     Args:
         model_file: Full path to a Model JSON file (DFJSON) or a Model pkl (DFpkl) file.
+        project_info: Full path to a ladybug ProjectInfo JSON that describes
+            criteria about the project site. When specified, this will result in
+            the location and north_angle written into the GEM.
         full_geometry: Boolean to note if the multipliers on each Building story
             will be passed along to the generated Honeybee Room objects or if
             full geometry objects should be written for each story in the
@@ -90,10 +105,16 @@ def model_to_gem(
         output_file: Optional GEM file to output the GEM string of the translation.
             If None, the string will be returned from this method. (Default: None).
     """
+    # load the ProjectInfo
+    if project_info is not None:
+        project_info = ProjectInfo.from_json(project_info)
     # re-serialize the Dragonfly Model
     model = Model.from_file(model_file)
     # create the strings for the model
     multiplier = not full_geometry
-    gem_str = writer_model_to_gem(model, multiplier, no_plenum)
+    gem_str = writer_model_to_gem(
+        model, project_info=project_info,
+        use_multiplier=multiplier, exclude_plenums=no_plenum, merge_method=merge_method
+    )
     # write out the GEM file
     return process_content_to_output(gem_str, output_file)

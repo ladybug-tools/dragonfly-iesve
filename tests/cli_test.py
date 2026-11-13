@@ -8,9 +8,10 @@ from dragonfly_iesve.cli.translate import model_to_gem_cli
 def test_df_model_to_ies():
     runner = CliRunner()
     input_df_model = './tests/assets/simple_model.dfjson'
+    project_info = './tests/assets/project_info.json'
     output_gem = './tests/assets/simple_model.gem'
 
-    in_args = [input_df_model, '--output-file', output_gem]
+    in_args = [input_df_model, '--project-info', project_info, '--output-file', output_gem]
     result = runner.invoke(model_to_gem_cli, in_args)
     assert result.exit_code == 0
     assert os.path.isfile(output_gem)
