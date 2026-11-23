@@ -3,6 +3,7 @@
 from __future__ import division
 
 from ladybug_geometry.geometry3d import Polyface3D
+from honeybee.units import parse_distance_string
 from honeybee.facetype import Floor, RoofCeiling, face_types
 from honeybee.room import Room as HBRoom
 from honeybee_iesve.writer import model_to_gem as hb_model_to_gem
@@ -45,37 +46,40 @@ def model_to_hb_iesve(model, use_multiplier=True, exclude_plenums=False, merge_m
         of room identifiers mapped to the new IESVE compatible IDs.
     """
     # translate the model to honeybee
+    tol = model.tolerance
+    p_tol = parse_distance_string('0.01m', model.units)
     hb_model = model.to_honeybee(
         'District', use_multiplier=use_multiplier, exclude_plenums=exclude_plenums,
         solve_ceiling_adjacencies=False, merge_method=merge_method,
         enforce_adj=False, enforce_solid=True
     )[0]
 
-    # check if there are any ceiling/floor air boundaries to translate
-    cf_air_rooms = []
+    # check if there are ceiling/floor air boundaries to translate or incorrect skylights
+    top_f_ids = set(bldg.unique_stories[-1].identifier for bldg in model.buildings)
+    cf_air_rooms, skylight_rooms = [], []
     for room in model.room_2ds:
         if not room.has_floor or not room.has_ceiling:
             cf_air_rooms.append(room)
+        if room.skylight_parameters is not None and room.parent.identifier not in top_f_ids:
+            skylight_rooms.append(room)
 
     # if any floor/ceiling rooms were found, solve adjacency between them
     if len(cf_air_rooms) != 0:
-        tolerance = model.tolerance
         room_ids = [r.identifier for r in cf_air_rooms]
         has_floor_ceil = [(r.has_floor, r.has_ceiling) for r in cf_air_rooms]
         hb_rooms = hb_model.rooms_by_identifier(room_ids)
         # intersect the Rooms with one another for matching adjacencies
-        HBRoom.intersect_adjacency(hb_rooms, tolerance, model.angle_tolerance)
+        HBRoom.intersect_adjacency(hb_rooms, tol, model.angle_tolerance)
         # solve adjacencies between rooms to yield matching air boundaries
         for i, (room_1, fc_1) in enumerate(zip(hb_rooms, has_floor_ceil)):
             try:
                 for room_2, fc_2 in zip(hb_rooms[i + 1:], has_floor_ceil[i + 1:]):
-                    if not Polyface3D.overlapping_bounding_boxes(
-                            room_1.geometry, room_2.geometry, tolerance):
+                    r1_geo, r2_geo = room_1.geometry, room_2.geometry
+                    if not Polyface3D.overlapping_bounding_boxes(r1_geo, r2_geo, tol):
                         continue  # no overlap in bounding box; adjacency impossible
                     for face_1 in room_1._faces:
                         for face_2 in room_2._faces:
-                            if face_1.geometry.is_centered_adjacent(
-                                    face_2.geometry, tolerance):
+                            if face_1.geometry.is_centered_adjacent(face_2.geometry, tol):
                                 face_1.remove_sub_faces()
                                 face_2.remove_sub_faces()
                                 hf_1, hc_1 = fc_1
@@ -93,6 +97,28 @@ def model_to_hb_iesve(model, use_multiplier=True, exclude_plenums=False, merge_m
                                 break
             except IndexError:
                 pass  # we have reached the end of the list of zones
+
+    # remove any skylights that coincide with a floor of a room above
+    if len(skylight_rooms) != 0:
+        all_floors = [r.floor_geometry for r in model.room_2ds]
+        room_ids = [r.identifier for r in skylight_rooms]
+        hb_rooms = hb_model.rooms_by_identifier(room_ids)
+        for hb_room in hb_rooms:
+            for roof in hb_room.roof_ceilings:
+                if roof.has_sub_faces and roof.geometry.is_horizontal(tol):
+                    correct_sf, z_val = [], roof.geometry.center.z
+                    rel_floors = [f for f in all_floors if z_val - f.min.z < tol]
+                    for sf in roof.sub_faces:
+                        s_pt = sf.center if sf.geometry.is_convex else \
+                            sf.geometry.pole_of_inaccessibility(p_tol)
+                        for r_face in rel_floors:
+                            if r_face.is_point_on_face(s_pt, tol):
+                                break
+                        else:
+                            correct_sf.append(sf)
+                    if len(correct_sf) != len(roof.sub_faces):
+                        roof.remove_sub_faces()
+                        roof.add_sub_faces(correct_sf)
 
     # ensure model has identifiers that are acceptable for GEM
     id_mapper = _convert_room_ids(hb_model)
